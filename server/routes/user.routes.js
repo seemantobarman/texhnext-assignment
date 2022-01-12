@@ -30,7 +30,6 @@ module.exports = (app) => {
 
   function importCsvData2MySQL(filePath) {
     let stream = fs.createReadStream(filePath);
-    let csvData = [];
     let csvStream = csv
       .parse()
       .on("data", function (data) {
@@ -45,14 +44,9 @@ module.exports = (app) => {
             console.log(err);
           });
 
-        csvData.push(data);
-
         console.log(object);
       })
       .on("end", function () {
-        // Remove Header ROW
-        csvData.shift();
-
         fs.unlinkSync(filePath);
       });
 
